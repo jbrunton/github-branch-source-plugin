@@ -43,7 +43,7 @@ public final class PullRequestSCMHead extends SCMHead {
     private final PullRequestAction metadata;
 
     PullRequestSCMHead(GHPullRequest pr) {
-        super(PR_BRANCH_PREFIX + pr.getNumber());
+        super(prName(pr));
         metadata = new PullRequestAction(pr);
     }
 
@@ -60,6 +60,15 @@ public final class PullRequestSCMHead extends SCMHead {
         List<Action> actions = new LinkedList<Action>(super.getAllActions());
         actions.add(metadata);
         return actions;
+    }
+
+    private static String prName(GHPullRequest pr) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("PR #");
+        sb.append(pr.getNumber());
+        sb.append(" ");
+        sb.append(pr.getTitle());
+        return sb.toString();
     }
 
 }
